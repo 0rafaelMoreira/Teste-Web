@@ -5,16 +5,16 @@ import { Input } from '../Input';
 import { Container, Error } from "./styles";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement>{
-    control: Control;
+    control?: Control;
     name: string;
-    error: string;
+    error?: string;
 }
 
 export function InputForm({
     control, 
     name, 
     error, 
-    ...rest
+    
 } : Props){
     return(
         <Container>
@@ -24,7 +24,7 @@ export function InputForm({
                     <Input 
                     onChange={onChange}
                     value={value && value.toString()}
-                    {...rest}
+                    
                 />
                 )}
                 name={name}

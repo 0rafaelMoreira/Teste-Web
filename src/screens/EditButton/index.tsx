@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React from "react";
 import { Button } from '../../components/Button';
 
 import { useForm } from "react-hook-form";
@@ -22,13 +22,11 @@ import { useHistory, useLocation } from "react-router-dom";
 import { api } from "../../services/api";
 
 
-
-
-
  interface FormData {
-    idprojeto: string;
-    ds_titulo: string;
-    ds_descricao: string;
+     id?:string;
+    idprojeto?: string;
+    ds_titulo?: string;
+    ds_descricao?: string;
 }
     
 const schema = Yup.object().shape({
@@ -48,14 +46,20 @@ const schema = Yup.object().shape({
 
 
 
+
+
+
 export default function EditButton(){
 
-    const location = useLocation<any>()
-    const VarBox = {
-                id:location.state?.id,
-                idprojeto: location.state?.idprojeto,
-                ds_titulo: location.state?.ds_titulo,
-                ds_descricao: location.state?.ds_descricao,
+    
+
+    const location = useLocation<FormData>()
+
+    const varBox:FormData = {
+                id:location.state.id ,
+                idprojeto: location.state.idprojeto,
+                ds_titulo: location.state.ds_titulo,
+                ds_descricao: location.state.ds_descricao,
     }
 
     const history = useHistory()
@@ -66,7 +70,7 @@ export default function EditButton(){
         reset,
         formState: { errors }
     } = useForm({
-        defaultValues:  VarBox,
+         defaultValues:  varBox,
         resolver: yupResolver(schema),
     });
 
@@ -74,7 +78,7 @@ export default function EditButton(){
         
        
          try {
-            await api.put(`/ApiBox/${VarBox.id}`,  {
+            await api.put(`/ApiBox/${varBox.id}`,  {
                 idprojeto: form.idprojeto,
                 ds_titulo: form.ds_titulo,
                 ds_descricao: form.ds_descricao,
@@ -87,8 +91,13 @@ export default function EditButton(){
          }
     }
     async function handleDelete(){
-        await api.delete(`/ApiBox/${VarBox.id}`).then(() => history.push("/"));
+       // eslint-disable-next-line no-restricted-globals
+       const res = confirm('Deleting');
+
+       res ? await api.delete(`/ApiBox/${varBox.id}`).then(() => history.push("/")) : history.push('/');
     }
+
+   
 
     return(
         <Container>
@@ -98,23 +107,27 @@ export default function EditButton(){
                     </Title>
                     <HeaderButton>
                     <Button title=" Editar" onClick={handleSubmit(HandleEditBox)}  />
-                    <Button title=" Deletar" onClick={handleSubmit(handleDelete)}  />
+                    <Button title=" Deletar" onClick={handleSubmit(handleDelete )}  />
                     
                     </HeaderButton>
             </Header>
 
 
             <Footer>
+            
+            
+
             <Codigo>
                    <h3>  Código </h3>
                 <InputForm
                     name="idprojeto"
                     placeholder="Codigo"
                     error={errors.idprojeto && errors.idprojeto.message} 
-                    control = {control}
+                    control={control}
                     
                     />
                 </Codigo>
+              
                 <h3>Título </h3>
                 <Titulo>
             
@@ -122,7 +135,7 @@ export default function EditButton(){
                     name="ds_titulo"
                     placeholder="Título"
                     error={errors.ds_titulo && errors.ds_titulo.message}
-                    control = {control}
+                    control={control}
                     />
             
                 </Titulo>
@@ -132,9 +145,10 @@ export default function EditButton(){
                     name="ds_descricao"
                     placeholder="Descrição "
                     error={errors.ds_descricao && errors.ds_descricao.message}
-                    control = {control}
+                    control={control}
                     />
                 </Descrição>
+               
             </Footer>
 
 
