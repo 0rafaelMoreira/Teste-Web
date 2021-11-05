@@ -1,21 +1,24 @@
 
 
+import { ButtonHTMLAttributes } from 'react';
 import {
     Container,
     TitleButton
 } from './styles';
 
-interface ButtonProps {
+interface  ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
     
-    onClick: () => void;
+    
     title: string;
+    
 }
 
 
-export function Button({ onClick, title}: ButtonProps){
+export function Button({ title,...rest}: ButtonProps){
     return (
         <Container
-        onClick={onClick}
+        
+        {...rest}
         
         ><TitleButton>
             {title}

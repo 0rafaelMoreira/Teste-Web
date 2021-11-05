@@ -18,7 +18,7 @@ import {
 
  } from "./styles";
 import { InputForm } from "../../components/InputForm";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { api } from "../../services/api";
 
 
@@ -48,7 +48,16 @@ const schema = Yup.object().shape({
 
 
 
-export default function AddButton(){
+export default function EditButton(){
+
+    const location = useLocation<any>()
+    const VarBox = {
+                id:location.state?.id,
+                idprojeto: location.state?.idprojeto,
+                ds_titulo: location.state?.ds_titulo,
+                ds_descricao: location.state?.ds_descricao,
+    }
+
     const history = useHistory()
     
     const {
@@ -57,34 +66,40 @@ export default function AddButton(){
         reset,
         formState: { errors }
     } = useForm({
+        defaultValues:  VarBox,
         resolver: yupResolver(schema),
     });
 
-    async function handleRegister(form: FormData) {
-        const newBox = {
-            idprojeto: form.idprojeto,
-            ds_titulo: form.ds_titulo,
-            ds_descricao: form.ds_descricao,
-        }
-        console.log(newBox)
+    async function HandleEditBox(form: FormData) {
+        
+       
          try {
-            await api.post("/ApiBox",  newBox ).then(() => history.push('/'))           
+            await api.put(`/ApiBox/${VarBox.id}`,  {
+                idprojeto: form.idprojeto,
+                ds_titulo: form.ds_titulo,
+                ds_descricao: form.ds_descricao,
+            } 
+            ).then(() => history.push('/'))           
 
             reset();
          } catch (error: any) {
              console.log(error.message);
          }
     }
-
+    async function handleDelete(){
+        await api.delete(`/ApiBox/${VarBox.id}`).then(() => history.push("/"));
+    }
 
     return(
         <Container>
             <Header> 
                 <Title>
-                   <Name> Adicionar </Name> 
+                   <Name> Editar </Name> 
                     </Title>
                     <HeaderButton>
-                    <Button title=" Adicionar" onClick={handleSubmit(handleRegister)}  />
+                    <Button title=" Editar" onClick={handleSubmit(HandleEditBox)}  />
+                    <Button title=" Deletar" onClick={handleSubmit(handleDelete)}  />
+                    
                     </HeaderButton>
             </Header>
 

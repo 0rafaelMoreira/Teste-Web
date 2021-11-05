@@ -5,6 +5,7 @@ import { BoxDTO } from '../../dtos/BoxDTO';
 import { api } from '../../services/api';
 import { CardBox} from '../../components/CardBox';
 import React, {useEffect, useState} from 'react';
+import {useHistory} from 'react-router-dom'
 
 
 import { 
@@ -16,17 +17,22 @@ import {
 
 } from "./styles";
 
-
-
-
-function createButton(){
-    console.log("passei aq")
-}
-
-
 export default function Home(){
 
-    console.log("tewetdddd");
+    function handleEditButton(VarBox: BoxDTO) {
+            history.push({
+                
+                pathname:`/editar`,
+                state: VarBox
+            })
+    }
+
+    const history = useHistory();
+
+    function createButton(){
+        history.push("/adicionar")
+     }
+    
     const [box, setBox] = useState<BoxDTO[]>([]);
 
 
@@ -61,7 +67,7 @@ export default function Home(){
             </Header>
             <Footer>
                 <ul>
-                    {box.map((project) => <li><CardBox data={project} onClick={() => {}}/></li>)}
+                    {box.map((project) => <li><CardBox data={project} onClick={()=>handleEditButton(project)}/></li>)}
                 </ul>
             </Footer>
 
