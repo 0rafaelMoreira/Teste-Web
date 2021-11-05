@@ -12,12 +12,6 @@ import {
 
  } from "./styles";
 
- 
-
-
-
-
-
 
 
 function createButton(){
@@ -26,7 +20,7 @@ function createButton(){
 
 
 
-export function AddButton(){
+export default function AddButton(){
     
 
     return(
@@ -42,6 +36,13 @@ export function AddButton(){
 
 
             <Footer>
+               
+                <label >Codigo</label>
+                <input type="text" name="Codigo"/>
+                <label >Titulo</label>
+                <input type="text" name="Codigo"/>
+                <label >Descrição</label>
+                <input type="text" name="Codigo"/>
                 
 
             </Footer>

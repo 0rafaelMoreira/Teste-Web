@@ -34,7 +34,11 @@ padding-top: 2rem;
     
 `;
 export const Footer = styled.div`
-max-width: auto;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+
 `;
 
     

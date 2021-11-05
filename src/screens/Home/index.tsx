@@ -24,7 +24,9 @@ function createButton(){
 }
 
 
-export function Home(){
+export default function Home(){
+
+    console.log("tewetdddd");
     const [box, setBox] = useState<BoxDTO[]>([]);
 
 
@@ -42,7 +44,7 @@ export function Home(){
            
         }
         Boxapi();
-    },[box])
+    },[])
 
 
 
