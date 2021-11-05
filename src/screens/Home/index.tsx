@@ -1,13 +1,52 @@
 
-import { Container, Header, Title, Name, HeaderButton } from "./styles";
+
 import {Button} from '../../components/Button'
+import { BoxDTO } from '../../dtos/BoxDTO';
+import { api } from '../../services/api';
+import { CardBox} from '../../components/CardBox';
+import React, {useEffect, useState} from 'react';
+
+
+import { 
+    Container, 
+    Header, Title, 
+    Name, 
+    HeaderButton,
+    Footer,
+
+} from "./styles";
+
+
+
 
 function createButton(){
-    console.log("Creating")
+    console.log("passei aq")
 }
 
 
 export function Home(){
+    const [box, setBox] = useState<BoxDTO[]>([]);
+
+
+    useEffect(() =>{
+        async function Boxapi () {
+        
+           try {
+
+            const response = await api.get('/ApiBox');
+            setBox(response.data);
+
+           } catch (error) {
+               console.log(error);
+           }
+           
+        }
+        Boxapi();
+    },[box])
+
+
+
+    
     return(
         <Container>
             <Header> 
@@ -18,6 +57,12 @@ export function Home(){
                     <Button title=" Novo" onClick={createButton}/>
                     </HeaderButton>
             </Header>
+            <Footer>
+                <ul>
+                    {box.map((project) => <li><CardBox data={project} onClick={() => {}}/></li>)}
+                </ul>
+            </Footer>
+
             
         </Container>
     );

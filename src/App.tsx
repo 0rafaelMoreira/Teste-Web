@@ -1,12 +1,22 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+
 import './App.css';
-import {AddButton} from '../src/screens/AddButton'
-import {Home} from '../src/screens/Home'
+
+
+
+import Routes from './routes';
+
+
 
 function App() {
   return (
-
-    <AddButton />
+    <Router>
+    
+      <Routes />
+      
+   
+  </Router>
   );
 }
 

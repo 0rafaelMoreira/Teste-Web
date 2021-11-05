@@ -1,6 +1,7 @@
 
 import { Button } from '../../components/Button';
-import { useForm } from 'react-hook-form';
+
+
 import { 
     Container, 
     Header, 
@@ -41,8 +42,8 @@ export function AddButton(){
 
 
             <Footer>
+                
 
-            
             </Footer>
 
 
