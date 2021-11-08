@@ -85,7 +85,7 @@ export default function EditButton(){
             } 
             ).then(() => history.push('/'))           
 
-            reset();
+            
          } catch (error: any) {
              console.log(error.message);
          }
